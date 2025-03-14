@@ -35,3 +35,43 @@ function processPayment(payment) {
   return payment.process();
 }
 ```
+
+### Code that violates the rule
+```js
+function calculateShipping(order) {
+  if (order.isInternational()) {
+    return order.getWeight() * 10;
+  } else if (order.isExpress()) {
+    return order.getWeight() * 5;
+  } else {
+    return order.getWeight() * 2;
+  }
+}
+```
+
+### Rule observed
+```js
+const shippingRates = {
+  international: order => order.getWeight() * 10,
+  express: order => order.getWeight() * 5,
+  standard: order => order.getWeight() * 2
+};
+```
+
+```js
+function calculateShipping(order) {
+  if (order.isInternational()) return shippingRates.international(order);
+  if (order.isExpress()) return shippingRates.express(order);
+  return shippingRates.standard(order);
+}
+```
+
+```js
+// order.type = "international" | "express" | "standard"
+function calculateShipping(order) {
+  const shippingRateStrategy = shippingRates[order.type] 
+                            ?? shippingRates["standard"];
+  
+  return shippingRateStrategy(order);
+}
+```
