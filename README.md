@@ -1,4 +1,4 @@
-# workshop-object-calisthenics
+# Object Calisthenics Workshop
 In this repository you can find all the exercises for the Object Calisthenics Workshop, by Dev Dojo IT.
 
 ## Object Calisthenics? What was that?
