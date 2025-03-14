@@ -14,7 +14,7 @@ This rule eliminates the ELSE clause from your code, pushing you toward early re
 - Implement the strategy pattern for varying behaviors
 - Use the null object pattern to handle special cases
 
-### Code that violates the rule
+### Rule violated
 ```js
 function processPayment(payment) {
   if (payment.isValid()) {
@@ -36,7 +36,7 @@ function processPayment(payment) {
 }
 ```
 
-### Code that violates the rule
+### Rule violated
 ```js
 function calculateShipping(order) {
   if (order.isInternational()) {

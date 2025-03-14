@@ -14,30 +14,49 @@ Create specific types that encapsulate primitives and strings, adding domain mea
 - Replace primitive parameters with typed objects
 - Group related primitives into meaningful business objects
 
-### Code that violates the rule
+
+### Rule violated
 ```js
-function procPymnt(usr, amt, curr, pType) {
-  const tx = curr === "EUR" ? amt * 0.22 : amt * 0.1;
-  const tamt = amt + tx;
-  
-  if (usr.pHist && usr.pHist.lstPymt > 0 && pType === "cc") {
-    return { sts: "ok", ttl: tamt, fee: tamt * 0.03 };
-  }
-  
-  return { sts: "err", ttl: tamt, msg: "inv pymt method" };
-}
+const age = 30;
+const email = "christian.nastasi@email.com"
+```
+
+```js
+const age = 440;
+
+const age2 = "thirty-one";
+
+const email = "christian.nastasi@email.com@something.com"
+
+const email2 = "foo";
 ```
 
 ### Rule observed
 ```js
-function processPayment(user, amount, currency, paymentType) {
-  const tax = currency === "EUR" ? amount * 0.22 : amount * 0.1;
-  const totalAmount = amount + tax;
-  
-  if (user.paymentHistory && user.paymentHistory.lastPayment > 0 && paymentType === "creditCard") {
-    return { status: "ok", total: totalAmount, fee: totalAmount * 0.03 };
+class Age {
+  constructor(value) {
+    if (!Number.isInteger(value)) throw new Error('Age must be an integer');
+    if (value < 0) throw new Error('Age cannot be negative');
+    if (value > 120) throw new Error('Age cannot be greater than 120');
+    
+    this.value = value;
+    
+    Object.freeze(this);
   }
   
-  return { status: "error", total: totalAmount, message: "Invalid payment method" };
+  equals(other) {
+    if (!(other instanceof Age)) {
+      return false;
+    }
+    return this.value === other.value;
+  }
+  
+  isAdult() {
+    return this.value >= 18;
+  }
+  
+  toString() {
+    return `${this.value} years old`;
+  }
 }
 ```
